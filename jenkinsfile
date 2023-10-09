@@ -1,18 +1,16 @@
-pipeline {
-    agent any // This runs the pipeline on any available agent
-
     stages {
-        stage('git') {
+        stage('Git') {
             steps {
                 // Checkout the code from your GitHub repository
-                checkout scm
+                git branch: 'yosser-kaddour', url: 'https://github.com/YosserK/achat.git'
             }
         }
-        stage('Build and Test') {
+
+        stage('Maven Clean and Compile') {
             steps {
-                // Run Maven commands to clean and compile code
+                // Run Maven clean and compile commands
                 sh 'mvn clean compile'
             }
         }
     }
-}
+
