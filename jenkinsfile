@@ -2,7 +2,7 @@ pipeline {
     agent any // This runs the pipeline on any available agent
 
     stages {
-        stage('Checkout') {
+        stage('git') {
             steps {
                 // Checkout the code from your GitHub repository
                 checkout scm
