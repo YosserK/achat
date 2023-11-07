@@ -6,6 +6,8 @@ services:
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: root
+      ports :
+    - 3306:3306
     volumes:
       - /home/mysql/data:/var/lib/mysql
   achat-backend:
@@ -13,7 +15,7 @@ services:
     container_name: achatcontainer
     restart: on-failure
     ports:
-      - "9091:9091"
+      - "8082:8082"
     depends_on:
       - mysqldb
   
