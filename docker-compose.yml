@@ -11,7 +11,7 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - db:/var/lib/mysql
+      - /home/mysql/data:/var/lib/mysql
   app-achat:
     depends_on:
       - mysqldb
@@ -19,5 +19,6 @@ services:
     restart: on-failure
     ports:
       - 8082:8082
+
 
 
