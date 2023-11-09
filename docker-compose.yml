@@ -15,6 +15,6 @@ services:
     container_name: achatcontainer
     restart: on-failure
     ports:
-      - "8082:8082"
+      - "6868:8082"
     depends_on:
       - mysqldb
