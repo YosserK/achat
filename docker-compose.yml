@@ -11,7 +11,7 @@ services:
     volumes:
       - /home/mysql/data:/var/lib/mysql
   achat-backend:
-    image:  MedAliRommene/achat:1.0.0
+    image:  medalirommene/achat:1.0.0
     container_name: achatcontainer
     restart: on-failure
     ports:
