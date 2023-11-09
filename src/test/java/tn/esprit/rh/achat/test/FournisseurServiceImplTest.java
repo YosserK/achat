@@ -9,8 +9,13 @@ import tn.esprit.rh.achat.entities.Fournisseur;
 import tn.esprit.rh.achat.repositories.FournisseurRepository;
 import tn.esprit.rh.achat.services.FournisseurServiceImpl;
 
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.times;
 
 @ExtendWith(MockitoExtension.class)
 class FournisseurServiceImplTest {
@@ -22,18 +27,47 @@ class FournisseurServiceImplTest {
     private FournisseurRepository fournisseurRepository;
 
     @Test
+    public void retrieveAllFournisseursTest() {
+        when(fournisseurRepository.findAll())
+                .thenReturn(Stream.of(new Fournisseur(), new Fournisseur(), new Fournisseur())
+                        .collect(Collectors.toList()));
+
+        assertEquals(3, fournisseurService.retrieveAllFournisseurs().size());
+    }
+
+    @Test
     public void addFournisseurTest() {
         Fournisseur fournisseur = new Fournisseur();
-        fournisseur.setCode("ABC123"); // Example code
-        // Set other attributes for the Fournisseur
-
-        // Mock the behavior of the repository
         when(fournisseurRepository.save(fournisseur)).thenReturn(fournisseur);
 
-        Fournisseur addedFournisseur = fournisseurService.addFournisseur(fournisseur);
+        assertEquals(fournisseur, fournisseurService.addFournisseur(fournisseur));
+    }
 
-        // Verify that the added Fournisseur matches the input Fournisseur
-        assertEquals(fournisseur.getCode(), addedFournisseur.getCode());
-        // Add assertions to check other attributes if needed
+    @Test
+    public void deleteFournisseurTest() {
+        Fournisseur fournisseur = new Fournisseur();
+        Fournisseur fournisseur1 = new Fournisseur();
+
+        fournisseurService.deleteFournisseur(fournisseur.getIdFournisseur());
+        fournisseurService.deleteFournisseur(fournisseur1.getIdFournisseur());
+
+        verify(fournisseurRepository, times(2)).deleteById(fournisseur.getIdFournisseur());
+    }
+
+    @Test
+    public void updateFournisseurTest() {
+        Fournisseur fournisseur = new Fournisseur();
+        when(fournisseurRepository.save(fournisseur)).thenReturn(fournisseur);
+
+        assertEquals(fournisseur, fournisseurService.updateFournisseur(fournisseur));
+    }
+
+    @Test
+    public void retrieveFournisseurTest() {
+        Fournisseur fournisseur = new Fournisseur();
+        when(fournisseurRepository.findById(fournisseur.getIdFournisseur()))
+                .thenReturn(java.util.Optional.of(fournisseur));
+
+        assertEquals(fournisseur.getIdFournisseur(), fournisseurService.retrieveFournisseur(fournisseur.getIdFournisseur()).getIdFournisseur());
     }
 }
