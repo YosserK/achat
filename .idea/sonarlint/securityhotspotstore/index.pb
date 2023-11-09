@@ -5,3 +5,6 @@ B
 docker-compose.yml,3\5\35b8c13cf2eb2a194eada000eb310d65aed53b2a
 >
 Dockerfile.txt,b\e\be43c0fb4a1bab1c8655cc56ff17a1c9e804a9fa
+:
+
+Dockerfile,6\6\6651ddff6eb82c840ced7c1dddee15c6e1913dd4
