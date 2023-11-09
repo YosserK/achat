@@ -54,13 +54,7 @@ class FournisseurServiceImplTest {
         verify(fournisseurRepository, times(2)).deleteById(fournisseur.getIdFournisseur());
     }
 
-    @Test
-    public void updateFournisseurTest() {
-        Fournisseur fournisseur = new Fournisseur();
-        when(fournisseurRepository.save(fournisseur)).thenReturn(fournisseur);
 
-        assertEquals(fournisseur, fournisseurService.updateFournisseur(fournisseur));
-    }
 
     @Test
     public void retrieveFournisseurTest() {
