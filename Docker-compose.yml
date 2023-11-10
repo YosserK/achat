@@ -1,39 +1,21 @@
 version: '3.8'
 services:
   mysqldb:
-
-    image: mysql:5.7
+    container_name: mysqldb
+    image: mysql:8
     restart: unless-stopped
     environment:
-      - MYSQL_ROOT_PASSWORD=
-      - MYSQL_DATABASE=achat_db
-
-
+      MYSQL_ROOT_PASSWORD: root
     ports:
-      - 3306:3306
+      - "3306:3306"
     volumes:
-      - db:/var/lib/mysql
-
-
-  app-achat:
-    depends_on:
-      - mysqldb
-
-    image:  yosserkaddour/achat:1.0.0 #we already built our image and push it on github so we just use it
-    #build : ./ :use the docker file which is at the same level
+      - /home/mysql/data:/var/lib/mysql
+  achat-backend:
+    image: yosserkaddour/achat
     container_name: achatcontainer
     restart: on-failure
     ports:
-      - 8082:8082
-    environment :
-      SPRING_APPLICATION_JSON: '{
-        "spring.datasource.url" :jcbc:mysql://mysqldb:3306/achat_db?createDatabaseIfNotExist=true",
-        "spring.datasource.username": "root" ,
-        "spring.datasource.password": "null" ,
-        "spring.jpa.properties.hibernate.dialect":"org.hibernate.dialect.MySQL5InnoDBDialect",
-        "spring.jpa.hibernate.ddl-auto"="update"
-       }'
-    stdin_open: true
-    tty: true
-volumes:
-  db:
+      - "8082:8082"
+    depends_on:
+      - mysqldb
+
